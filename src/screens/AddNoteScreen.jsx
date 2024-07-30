@@ -2,12 +2,17 @@ import { useState } from 'react';
 import {useNavigation} from '@react-navigation/native';
 import { StyleSheet, TextInput, View, TouchableOpacity, Text } from 'react-native';
 import colors from '../theme/colors';
+import { useDispatch } from 'react-redux';
+import { addNote, fetchNotes } from '../redux/notesSlice';
 
 const AddNoteScreen = () => {
     const [content, setContent] = useState('');
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     const addHandler = () => {
+        dispatch(addNote(content));
+        dispatch(fetchNotes());
         navigation.goBack()
     }
     return (
@@ -30,7 +35,7 @@ const AddNoteScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 24
+        padding: 24,
     },
     input: {
         height: 300,

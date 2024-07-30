@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import colors from './src/theme/colors';
 import { Ionicons } from '@expo/vector-icons';
 
+import { store } from './src/redux/store';
+import { Provider } from 'react-redux';
 
 import NotesListScreen from './src/screens/NotesListScreens';
 import AddNoteScreen from './src/screens/AddNoteScreen';
@@ -12,6 +14,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <Provider store={store}> 
     <SafeAreaView style={{flex: 1}}>
       <NavigationContainer theme= {{ //navigation container sebagai parent screen untuk setting tema
         colors: {
@@ -39,24 +42,25 @@ export default function App() {
               ),
             })}
           />
-          <Stack.Screen 
-            name="AddNoteScreen" 
-            component={AddNoteScreen}
-            options={({navigation}) => ({
-              headerTitle: 'Add New Note',
-              headerLeft: () => (
-                <Ionicons
-                  name= 'arrow-back-circle'
-                  size={24}
-                  color={colors.primary.blue}
-                  onPress={() => navigation.goBack()}
-             /> 
-            ),
-          })}
-        />
+          <Stack.Screen
+              name="AddNoteScreen"
+              component={AddNoteScreen}
+              options={({ navigation }) => ({
+                headerTitle: 'Add New Note',
+                headerLeft: () => (
+                  <Ionicons
+                    name="arrow-back-circle"
+                    size={24}
+                    color={colors.primary.blue}
+                    onPress={() => navigation.goBack()}
+                  />
+                ),
+              })}
+            />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
+  </Provider>
   );
 }
 
